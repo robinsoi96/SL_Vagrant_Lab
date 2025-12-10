@@ -1,6 +1,13 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+require 'yaml' # Telling the script that it requires yaml reference
+
+# Load the YAML file and derive all information respectively
+config_info = YAML.load_file('./config.yml')
+vmHostname = config_info['VM_config']['hostname'] # VM hostname
+vmName = config_info['VM_config']['VM_name'] # VM name to be reflected in VirtualBox
+
 # All Vagrant configuration is done below. The "2" in Vagrant.configure
 # configures the configuration version (we support older styles for
 # backwards compatibility). Please don't change it unless you know what
@@ -39,18 +46,12 @@ Vagrant.configure("2") do |config|
   # your network.
   config.vm.network "public_network"
 
-  # Share an additional folder to the guest VM. The first argument is
-  # the path on the host to the actual folder. The second argument is
-  # the path on the guest to mount the folder. And the optional third
-  # argument is a set of non-required options.
-  # config.vm.synced_folder "../data", "/vagrant_data"
+  # Assign hostname
+  config.vm.hostname = vmHostname
 
-  # Disable the default share of the current code directory. Doing this
-  # provides improved isolation between the vagrant box and your host
-  # by making sure your Vagrantfile isn't accessible to the vagrant box.
-  # If you use this you may want to enable additional shared subfolders as
-  # shown above.
+  # Vagrant shared folder configurations
   config.vm.synced_folder ".", "/vagrant", disabled: true
+  config.vm.synced_folder "./shareFile", "/vagrant"
 
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
@@ -59,16 +60,9 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "1024" # Set this VM to be allocated with 1GB of RAM
     vb.cpus = 2 # 2 CPUs
+    vb.name = vmName # Set VM name in VirtualBox
   end
-  #
-  # View the documentation for the provider you are using for more
-  # information on available options.
-
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
-  # documentation for more information about their specific syntax and use.
-  # config.vm.provision "shell", inline: <<-SHELL
-  #   apt-get update
-  #   apt-get install -y apache2
-  # SHELL
+  
+  # Provisioning
+  config.vm.provision "shell", path: "./shareFile/provisioning/provision.sh"
 end
