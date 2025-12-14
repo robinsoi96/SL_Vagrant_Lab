@@ -8,6 +8,7 @@ The purpose of this project is to create own VM (Virtual Machine) using Vagrant
 
 - <a href="https://developer.hashicorp.com/vagrant/downloads">Vagrant</a>
 - <a href="https://www.virtualbox.org/wiki/Downloads">Oracle VirtualBox</a> (VM provider used for this project)
+- <a href="https://git-scm.com/install/windows">Git Bash</a> [if you are using Windows]
 
 For the software mentioned above, you may opt to use package manager for installation (e.g. Chocolatey for Windows, HomeBrew for MacOS, APT for Debian based Linux distro, YUM for RPM based Linux distro)
 
@@ -26,7 +27,7 @@ For the software mentioned above, you may opt to use package manager for install
         - `Docker Desktop`
         - `Virtual Machine Platform`
 
-## Setting own hostname and VM name
+## Configuration settings to be updated
 
 1) Prepare a yaml file named "config.yml" in the same directory as this README.md
 
@@ -38,7 +39,7 @@ For the software mentioned above, you may opt to use package manager for install
 
     - Reason to do so is because config.yml is mentioned in [.gitignore](./.gitignore), so that your credentials won't be tracked and pushed to remote repo by Git if any changes needed
 
-2) In Vagrantfile, enable all info to be derived from the yaml file prepared
+    - In Vagrantfile, all configuration info done will be derived from the yaml file prepared
 
     ```ruby
     require 'yaml' # Telling the script that it requires yaml reference
@@ -49,14 +50,14 @@ For the software mentioned above, you may opt to use package manager for install
     vmName = config_info['VM_config']['VM_name'] # VM name to be reflected in VirtualBox
     ```
 
-3) In config block of Vagrantfile, add this line to set hostname
+    - The code line in Vagrantfile below updates the hostname set in the config.yml
 
     ```ruby
     # Assign hostname
     config.vm.hostname = vmHostname
     ```
 
-4) Add the below line in the `config.vm.provider "virtualbox" do |vb|` block of Vagrantfile
+    - The code line in Vagrantfile below updates the VM name set in the config.yml
 
     ```ruby
     vb.name = vmName # Set VM name in VirtualBox
@@ -111,20 +112,28 @@ For the software mentioned above, you may opt to use package manager for install
 
 ## Project Implementation
 
-- Run `vagrant validate` to validate Vagrantfile before kickstart Vagrant execution
+The main bash script [main.sh](./main.sh) will be main script for this project.
 
-- Run `vagrant up` to start or boot up the VM
-    
-    - If you are running this the first time, it will take time because it needs to download the box (ubuntu/jammy64) from Vagrant Cloud
+In Linux host machine, do as below to run the main script:
 
-- Run `vagrant reload` to restart or reboot the VM
+```shell
+chmod +x main.sh
+./main.sh
+```
 
-    - Run `vagrant reload --provision` to refresh if updated provisioning script
+In Windows host machine, please ensure you open your Git Bash terminal to run the main script:
 
-- Run `vagrant ssh` to SSH to the VM
+```shell
+./main.sh
+```
 
-- Run `vagrant halt` to shut down the VM
-    
-    - **NOTE:** Please also run this before shutting down your host machine]
+The main script will kickstart the VM build, and then prompt for interactive response after the VM build is completed.
 
-- Run `vagrant destroy -f` to destroy or delete the VM, followed by `vagrant global-status --prune` to clean up the global status list of Vagrant
+The main interactive prompt after the VM build will be as below:
+
+- Reboot the VM
+- Reboot the VM by updating the provisioning action
+- Destroy the entire VM configuration (Delete entire VM built)
+- Shut down the VM
+
+You may try and play around with this main script.
