@@ -29,7 +29,7 @@ For the software mentioned above, you may opt to use package manager for install
 
 ## Configuration settings to be updated
 
-1) Prepare a yaml file named "config.yml" in the same directory as this README.md
+- Prepare a yaml file named "config.yml" in the same directory as this README.md
 
     ```yaml
     VM_config:
