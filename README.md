@@ -1,4 +1,4 @@
-# SL Vagrant Lab
+# SL VM Lab
 
 The purpose of this project is to create own VM (Virtual Machine) using Vagrant
 
@@ -6,9 +6,9 @@ The purpose of this project is to create own VM (Virtual Machine) using Vagrant
 
 ### Software required
 
-- <a href="https://developer.hashicorp.com/vagrant/downloads">Vagrant</a>
-- <a href="https://www.virtualbox.org/wiki/Downloads">Oracle VirtualBox</a> (VM provider used for this project)
-- <a href="https://git-scm.com/install/windows">Git Bash</a> [if you are using Windows]
+- [Vagrant](https://developer.hashicorp.com/vagrant/downloads)
+- [Oracle VirtualBox](https://www.virtualbox.org/wiki/Downloads) (VM provider used for this project)
+- [Git Bash](https://git-scm.com/install/windows) [if you are using Windows]
 
 For the software mentioned above, you may opt to use package manager for installation (e.g. Chocolatey for Windows, HomeBrew for MacOS, APT for Debian based Linux distro, YUM for RPM based Linux distro)
 
