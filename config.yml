@@ -1,0 +1,16 @@
+vm_config:
+
+  # 1st VM [if want to add another VM, just follow the content structure format of 1st VM mentioned below]
+  - name: "SL_VM"
+    image:
+      os_name: "Ubuntu Resolute" # OS name for image path given to the VM for readability only
+      os_type: "Linux" # Available options: ['Windows', 'Linux']
+      image_path: "https://releases.ubuntu.com/resolute/ubuntu-26.04-desktop-amd64.iso"
+    hw_setup:
+      CPU:
+        - core_number: 2
+      RAM: "2GB"
+      Boot_drive:
+        - storage: "20GB"
+        - disk_partition_number: 1
+    task:

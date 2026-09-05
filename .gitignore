@@ -1,3 +1,15 @@
-.vagrant
-config.yml
-vagrant_log/*
+# Python Virtual Environment Setup
+# ---------------------------------
+pyenv/
+venv.txt
+
+# Virtual Box VMs Definition File Path
+# ------------------------------------
+VBox_VMs/
+
+# Folder for backup data and logs
+#--------------------------------
+.db/
+
+# Other files to ignore:
+**/__pycache__
